@@ -1,0 +1,14 @@
+{
+  "name": "word-score",
+  "version": "1.0.0",
+  "description": "word-score",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.11.7"
+  }
+}

@@ -1,0 +1,6 @@
+[submodule "src/vocabulometer-client"]
+	path = src/vocabulometer-client
+	url = https://github.com/clejacquet/vocabulometer-client
+[submodule "src/vocabulometer-server"]
+	path = src/vocabulometer-server
+	url = https://github.com/clejacquet/vocabulometer-server
