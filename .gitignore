@@ -1,1 +1,5 @@
 texts/
+src/production
+src/doc
+*/**/.idea
+*/**/*.iml

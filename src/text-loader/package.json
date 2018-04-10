@@ -9,6 +9,7 @@
   "author": "Clément JACQUET",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "request": "^2.81.0"
   }
 }

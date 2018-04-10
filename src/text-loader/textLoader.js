@@ -1,6 +1,7 @@
 const request = require('request');
 const fs = require('fs');
 const path = require('path');
+const async = require('async');
 
 const sourceDir = [
     '../doc/texts/bbc/business',
@@ -16,27 +17,64 @@ sourceDir.forEach((dir) => {
             return console.error(err);
         }
 
-        files.forEach((file) => {
+        // fs.readFile(path.join(dir, files[0]), 'utf8', (err, data) => {
+        //     if (err) {
+        //         cb(err);
+        //     }
+        //
+        //     const lines = data.split('\n\n');
+        //     const title = lines.splice(0, 1)[0];
+        //     const text = lines.join('\n');
+        //
+        //     request.post('http://10.127.11.133/api/texts', {
+        //         json: {
+        //             title: title,
+        //             text: text
+        //         }
+        //     }, (err, response, body) => {
+        //         if (err) {
+        //             return cb(err);
+        //         }
+        //
+        //         if (!err && response.statusCode >= 200 && response.statusCode < 300) {
+        //             cb(null, true);
+        //         }
+        //     })
+        // });
+        console.log(files.length);
+
+        async.map(files, (file, cb) => {
             fs.readFile(path.join(dir, file), 'utf8', (err, data) => {
-                const lines = data.split('\n');
+                if (err) {
+                    cb(err);
+                }
+
+                const lines = data.split('\n\n');
                 const title = lines.splice(0, 1)[0];
                 const text = lines.join('\n');
 
                 request.post('http://localhost:4100/api/texts', {
                     json: {
                         title: title,
-                        text: text
+                        body: text,
+                        source: 'BBC'
                     }
                 }, (err, response, body) => {
                     if (err) {
-                        return console.error(err);
+                        return cb(err);
                     }
 
-                    if (!err && response.statusCode == 200) {
-                        console.log(body)
+                    if (!err && response.statusCode >= 200 && response.statusCode < 300) {
+                        cb(null, true);
                     }
                 })
             });
+        }, (err, res) => {
+            if (err) {
+                return console.error(err);
+            }
+
+            console.log('success');
         });
     });
 });
