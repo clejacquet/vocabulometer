@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LemmaListData {
-    public LemmaData[] result;
+    public LemmaParagraphData[] result;
 
     public LemmaListData() {
 
@@ -18,6 +18,8 @@ public class LemmaListData {
         }
 
         return Arrays.stream(this.result)
+                .flatMap(lp -> Arrays.stream(lp.words))
+                .filter(l -> l.lemma != null)
                 .map(l -> l.lemma)
                 .collect(Collectors.toList());
     }

@@ -1,16 +1,19 @@
 package jp.osakafu.imp.vocabulometer;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import edu.stanford.nlp.ling.SentenceUtils;
-import jp.osakafu.imp.vocabulometer.nlp.data.LemmaListData;
 import jp.osakafu.imp.vocabulometer.nlp.Main;
+import jp.osakafu.imp.vocabulometer.nlp.data.LemmaTextListData;
+import jp.osakafu.imp.vocabulometer.nlp.utils.JsonUtils;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.junit.After;
@@ -18,6 +21,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+import java.util.function.Function;
 
 import static org.junit.Assert.assertEquals;
 
@@ -55,16 +59,16 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        Form form = new Form();
-        form.param("text", "Hello world, I'm Clement, nice to meet you.");
+        JsonArray array = JsonUtils.toJsonStringArray(Collections.singletonList("Hello world, I'm Clement, nice to meet you."), Function.identity());
 
-        Entity<Form> postBody = Entity.form(form);
+
+        Entity<JsonObject> texts = Entity.json(Json.createObjectBuilder().add("texts", array).build());
 
         Response responseMsg = target
                 .path("lemmatize")
-                .request(MediaType.APPLICATION_FORM_URLENCODED)
+                .request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .post(postBody);
+                .post(texts);
 
         System.out.println("STATUS: " + responseMsg.getStatus());
 
@@ -73,7 +77,7 @@ public class MyResourceTest {
             fail();
         }
 
-        LemmaListData lemmaListData = responseMsg.readEntity(LemmaListData.class);
+        LemmaTextListData lemmaListData = responseMsg.readEntity(LemmaTextListData.class);
 
         assertEquals("hello world nice meet", SentenceUtils.listToString(lemmaListData.toList()));
     }

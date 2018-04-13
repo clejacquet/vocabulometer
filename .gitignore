@@ -1,5 +1,4 @@
-texts/
-src/production
-src/doc
+production
+doc
 */**/.idea
 */**/*.iml

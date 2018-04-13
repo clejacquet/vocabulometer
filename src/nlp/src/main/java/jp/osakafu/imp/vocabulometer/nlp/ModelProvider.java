@@ -17,10 +17,12 @@ public class ModelProvider {
     private static final String POS_TAGGER_PATH = "src/main/resources/models/english-left3words-distsim.tagger";
     private static final String NER_MODEL_PATH = "src/main/resources/classifiers/english.all.3class.distsim.crf.ser.gz";
     private static final String STOPWORDS_PATH = "src/main/resources/stopwords.txt";
+    private static final String PUNCTUATION_PATH = "src/main/resources/punctuation.txt";
 
     private static AbstractSequenceClassifier<CoreLabel> NER_CLASSIFIER;
     private static StanfordCoreNLP POS_PIPELINE;
     private static Set<String> STOPWORDS;
+    private static Set<String> PUNCTUATION;
 
     public static AbstractSequenceClassifier<CoreLabel> getNerClassifier() {
         if (NER_CLASSIFIER == null) {
@@ -52,27 +54,48 @@ public class ModelProvider {
         return POS_PIPELINE;
     }
 
+    private static Set<String> getTokenSetFromFile(String path) {
+        try {
+            Set<String> wordSet = new HashSet<>();
+
+            BufferedReader bf = new BufferedReader(new FileReader(path));
+
+            String line = bf.readLine();
+            while (line != null) {
+                wordSet.add(line);
+                line = bf.readLine();
+            }
+
+            return wordSet;
+        } catch (FileNotFoundException err) {
+            System.err.println("File path provided not existing");
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static Set<String> getStopWords() {
         if (STOPWORDS == null) {
-            try {
-                STOPWORDS = new HashSet<>();
-
-                BufferedReader bf = new BufferedReader(new FileReader(STOPWORDS_PATH));
-
-                String line = bf.readLine();
-                while (line != null) {
-                    STOPWORDS.add(line);
-                    line = bf.readLine();
-                }
-            } catch (FileNotFoundException err) {
-                System.err.println("File path provided not existing");
-                return null;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            STOPWORDS = getTokenSetFromFile(STOPWORDS_PATH);
         }
 
         return STOPWORDS;
+    }
+
+    public static Set<String> getPunctuation() {
+        if (PUNCTUATION == null) {
+            PUNCTUATION = getTokenSetFromFile(PUNCTUATION_PATH);
+        }
+
+        return PUNCTUATION;
+    }
+
+    public static void forceInit() {
+        getNerClassifier();
+        getPosPipeline();
+        getStopWords();
+        getPunctuation();
     }
 }

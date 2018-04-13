@@ -6,10 +6,10 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
-class StopwordFilter implements UnaryOperator<List<Map.Entry<String, String>>> {
+class TokenFilter implements UnaryOperator<List<Map.Entry<String, String>>> {
     private Set<String> stopwords;
 
-    StopwordFilter(Set<String> stopwords) {
+    TokenFilter(Set<String> stopwords) {
         this.stopwords = stopwords;
     }
 
