@@ -1,5 +1,5 @@
-production
 doc
+local
 db_saves
 */**/.idea
 */**/*.iml

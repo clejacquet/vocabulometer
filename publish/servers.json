@@ -1,0 +1,27 @@
+[
+  {
+    "name": "dev",
+    "type": "heroku-vocabulometer",
+    "cwd": "./servers/heroku/dev",
+    "specific": {
+      "ngEnv": "dev"
+    }
+  },
+  {
+    "name": "prod",
+    "type": "heroku-vocabulometer",
+    "cwd": "./servers/heroku/stable",
+    "specific": {
+      "ngEnv": "prod"
+    }
+  },
+  {
+    "name": "lab",
+    "type": "git",
+    "cwd": "./servers/vm",
+    "specific": {
+      "remote": "origin",
+      "branch": "master"
+    }
+  }
+]
