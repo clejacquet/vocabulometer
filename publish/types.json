@@ -2,5 +2,9 @@
   {
     "name": "heroku-vocabulometer",
     "path": "./types/heroku-vocabulometer.js"
+  },
+  {
+    "name": "git",
+    "path": "./types/git.js"
   }
 ]
