@@ -58,7 +58,7 @@ module.exports = (gulp, server) => {
             .on('end', done);
     });
 
-    gulp.task(`${server.name}:publish`, [ `${server.name}:copy-client`, `${server.name}:copy-server` ], (done) => {
+    gulp.task(`${server.name}:deploy`, [ `${server.name}:copy-client`, `${server.name}:copy-server` ], (done) => {
         run(`${server.name}:add`, `${server.name}:commit`, `${server.name}:push`, done);
     });
 };
