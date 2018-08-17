@@ -1,0 +1,9 @@
+FROM node:carbon
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 4100
+ENV MONGO_ADDRESS="mongo/vocabulometer"
+ENV NLP_ADDRESS="nlp:7070"
+CMD [ "npm", "start" ]

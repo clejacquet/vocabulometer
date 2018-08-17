@@ -1,7 +1,10 @@
 const gulp = require('gulp');
-const gulpSh = require('gulp-shell');
+const gulpGit = require('gulp-git');
 const fs = require('fs');
 const run = require('run-sequence');
+const del = require('del');
+const shTask = require('./utils/shTask');
+const _ = require('underscore');
 
 const loadJsonFile = (filename) => {
     return JSON.parse(fs.readFileSync(filename, 'utf8'));
@@ -10,27 +13,52 @@ const loadJsonFile = (filename) => {
 const types = loadJsonFile('types.json');
 const servers = loadJsonFile('servers.json');
 
-const toProcessArray = types.map(type => ({
-    processorPath: type.path,
-    servers: servers.filter(server => server.type === type.name)
-}));
+const typeMap = {};
 
-toProcessArray.forEach(typeItem => {
-    const typeProcessor = require(typeItem.processorPath);
-
-    typeItem.servers.forEach(server => {
-        typeProcessor(gulp, server);
-    });
+types.forEach(type => {
+    type.inherits = type.inherits || [];
+    typeMap[type.name] = require(type.path)(gulp);
 });
 
-gulp.task('heroku:install', gulpSh.task('curl https://cli-assets.heroku.com/install.sh | sh'));
+types.forEach(type => {
+    const srcTypes = type.inherits.concat([type.name]).map(otherTypeName => typeMap[otherTypeName]);
+    const allTaskBuilders = _.extend({}, ...srcTypes);
 
-gulp.task('heroku:uninstall', gulpSh.task('sudo rm /usr/local/bin/heroku && sudo rm -rf /usr/local/lib/heroku /usr/local/heroku && sudo rm -rf ~/.local/share/heroku ~/.cache/heroku'));
+    servers
+	.filter(server => server.type === type.name)
+	.forEach(server => {
+	    Object.keys(allTaskBuilders).forEach(taskName => {
+		const taskBuilder = allTaskBuilders[taskName];
+		const taskItem = taskBuilder(server);
 
-gulp.task('heroku:login', gulpSh.task('heroku login'));
+		taskItem.task = taskItem.task || (() => {});
+		taskItem.deps = taskItem.deps || [];
 
-gulp.task('heroku:clone-dev', gulpSh.task('heroku git:clone -a vocabulometer-dev servers/heroku/dev'));
+		gulp.task(`${server.name}:${taskName}`, taskItem.deps, taskItem.task);
+	    });
+	});
+});
 
-gulp.task('heroku:clone-prod', gulpSh.task('heroku git:clone -a vocabulometer servers/heroku/stable'));
+gulp.task('heroku:install', shTask('curl https://cli-assets.heroku.com/install.sh | sh'));
 
-gulp.task('heroku:init', [ 'heroku:clone-dev', 'heroku:clone-prod' ]);
+gulp.task('heroku:uninstall', shTask('sudo rm /usr/local/bin/heroku && sudo rm -rf /usr/local/lib/heroku /usr/local/heroku && sudo rm -rf ~/.local/share/heroku ~/.cache/heroku'));
+
+gulp.task('heroku:login', shTask('heroku login'));
+
+
+
+gulp.task('clean-all', () => {
+    del.sync([ './servers' ]);
+});
+
+gulp.task('install-all', [
+    'dev:clone',
+    'prod:clone',
+    'docker-web:init',
+    'docker-nlp-en:init',
+    'heroku-nlp-en:copy'
+], () => {});
+
+gulp.task('setup', [ 'clean-all' ], (done) => {
+    run('install-all', done);
+});

@@ -1,0 +1,74 @@
+version: "3"
+services:
+  web:
+    image: clejacquet/vocabulometer
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 80:4100
+    environment:
+      - YT_REDIRECT_URI=http://10.15.0.7/admin
+      - MONGO_ADDRESS=mongo/vocabulometer
+      - MONGO_TEXTS_ADDRESS=mongo/vocabulometer-texts
+      - MONGO_USR=clejacquet
+      - MONGO_PWD=clejacquet-imp
+      - MONGO_TEXTS_USR=clejacquet
+      - MONGO_TEXTS_PWD=clejacquet-imp
+      - NLP_EN_ADDRESS=nlp_en:7070
+      - NLP_JP_ADDRESS=nlp_jp:2345
+      - GUARDIAN_API_KEY=eb620722-3e37-4696-b435-254b72127703
+    networks:
+      - webnet
+    depends_on:
+      - mongo
+      - nlp_en
+      - nlp_jp
+      
+  nlp_en:
+    image: clejacquet/vocabulometer-nlp-en
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 7070:7070
+    networks:
+      - webnet
+
+  nlp_jp:
+    image: clejacquet/vocabulometer-nlp-jp
+    deploy:
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 2345:2345
+    networks:
+      - webnet
+  
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+  
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      - AUTH=yes
+    volumes:
+      - /home/vocabulometer/mongodb/data:/data/db
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    networks:
+      - webnet
+networks:
+  webnet:

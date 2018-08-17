@@ -1,10 +1,37 @@
 [
-  {
-    "name": "heroku-vocabulometer",
-    "path": "./types/heroku-vocabulometer.js"
-  },
-  {
-    "name": "git",
-    "path": "./types/git.js"
-  }
+    {
+	"name": "git",
+	"path": "./types/git.js"
+    },
+    {
+	"name": "docker",
+	"path": "./types/docker.js"
+    },
+    {
+	"name": "heroku",
+	"path": "./types/heroku.js"
+    },
+    {
+	"name": "web",
+	"path": "./types/web.js"
+    },
+    {
+	"name": "docker-web",
+	"path": "./types/docker-web.js",
+	"inherits": [ "docker", "web" ]
+    },
+    {
+	"name": "heroku-web",
+	"path": "./types/heroku-web.js",
+	"inherits": [ "git", "heroku", "web" ]
+    },
+    {
+	"name": "docker-nlp-en",
+	"path": "./types/docker-nlp-en.js",
+	"inherits": [ "docker" ]
+    },
+    {
+	"name": "heroku-nlp-en",
+	"path": "./types/heroku-nlp-en.js"
+    }
 ]

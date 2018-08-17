@@ -1,0 +1,15 @@
+FROM maven:3.5.3-jdk-8
+
+WORKDIR /app
+
+COPY . /app
+
+ENV MAVEN_OPTS="-Xmx1g"
+
+ENV PORT="7070"
+
+RUN mvn package -DskipTests
+
+EXPOSE 7070
+
+CMD ["mvn", "exec:java"]
