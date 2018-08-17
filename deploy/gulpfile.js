@@ -15,13 +15,37 @@ const servers = loadJsonFile('servers.json');
 
 const typeMap = {};
 
-types.forEach(type => {
+types.forEach((type, i) => {
     type.inherits = type.inherits || [];
-    typeMap[type.name] = require(type.path)(gulp);
+    typeMap[type.name] = {
+	value: require(type.path)(gulp),
+	id: i
+    }
 });
 
-types.forEach(type => {
-    const srcTypes = type.inherits.concat([type.name]).map(otherTypeName => typeMap[otherTypeName]);
+fullTypeMap = Array(types.length).fill(0);
+
+const recFunc = (i, visited) => {
+    // if already visited throws an error
+    if (visited.has(i)) {
+	console.error('Error: Circular inheritance found');
+	process.exit(1);
+    }
+
+    visited = new Set([...visited]).add(i);
+
+    const typeList = types[i].inherits.map(oType => [...recFunc(typeMap[oType].id, visited)]);
+    fullTypeMap[i] = new Set([i, ..._.flatten(typeList, 1)]);
+    return fullTypeMap[i];
+}
+
+types.forEach((_, i) => recFunc(i, new Set()));
+
+fullTypeMap.forEach((fullTypeEntry, i) => {
+    const type = types[i];
+    const srcTypes = [...fullTypeEntry].map(entry => {
+	return typeMap[types[entry].name].value
+    });
     const allTaskBuilders = _.extend({}, ...srcTypes);
 
     servers
@@ -45,6 +69,8 @@ gulp.task('heroku:uninstall', shTask('sudo rm /usr/local/bin/heroku && sudo rm -
 
 gulp.task('heroku:login', shTask('heroku login'));
 
+gulp.task('heroku:container-login', shTask('heroku container:login'));
+
 
 
 gulp.task('clean-all', () => {
@@ -56,7 +82,8 @@ gulp.task('install-all', [
     'prod:clone',
     'docker-web:init',
     'docker-nlp-en:init',
-    'heroku-nlp-en:copy'
+    'heroku-nlp-en:copy',
+    'heroku-nlp-jp:init'
 ], () => {});
 
 gulp.task('setup', [ 'clean-all' ], (done) => {

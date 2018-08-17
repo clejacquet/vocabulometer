@@ -40,9 +40,20 @@
 	"type": "docker-nlp-en",
 	"cwd": "./servers/docker/nlp-en",
 	"specific": {
-	    "srcDirectory": "../modules/nlp-server",
+	    "srcDirectory": "../modules/nlp-en",
 	    "dockerfilePath": "./docker/vocabulometer-nlp-en-dockerfile",
 	    "dockerTag": "clejacquet/vocabulometer-nlp-en"
+	}
+    },
+    {
+	"name": "heroku-nlp-jp",
+	"type": "heroku-nlp-jp",
+	"cwd": "./servers/heroku/nlp-jp",
+	"specific": {
+	    "appName": "jumanpp",
+	    "srcDirectory": "../modules/nlp-jp",
+	    "dockerfilePath": "./docker/vocabulometer-nlp-jp-dockerfile",
+	    "dockerTag": "clejacquet/vocabulometer-nlp-jp"
 	}
     }
 ]

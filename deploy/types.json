@@ -33,5 +33,10 @@
     {
 	"name": "heroku-nlp-en",
 	"path": "./types/heroku-nlp-en.js"
+    },
+    {
+	"name": "heroku-nlp-jp",
+	"path": "./types/heroku-nlp-jp.js",
+	"inherits": [ "docker" ]
     }
 ]
