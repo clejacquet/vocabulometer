@@ -4,8 +4,8 @@
 [submodule "modules/server"]
 	path = modules/server
 	url = https://github.com/clejacquet/vocabulometer-server
-[submodule "modules/nlp-server"]
-	path = modules/nlp-server
+[submodule "modules/nlp-en"]
+	path = modules/nlp-en
 	url = https://github.com/clejacquet/vocabulometer-nlp
 [submodule "modules/fixation-provider"]
 	path = modules/fixation-provider
