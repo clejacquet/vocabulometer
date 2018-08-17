@@ -11,3 +11,6 @@
 	path = modules/fixation-provider
 	url = https://github.com/clejacquet/vocabulometer-gaze
 
+[submodule "modules/nlp-jp"]
+	path = modules/nlp-jp
+	url = https://github.com/clejacquet/vocabulometer-nlp-en.git
