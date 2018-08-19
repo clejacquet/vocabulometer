@@ -37,7 +37,7 @@ do
 
 	"get-secrets")
 	    shift
-	    echo "As you may have already seen, environment config files contains passwords for database access. For obvious security concerns those files cannot be released on the public Github repository. Please write an email to this address for retrieving them: clem.jacquet@gmail.com"
+	    echo "As you may have already seen, environment config files contain passwords for database access. For obvious security concerns those files cannot be released on the public Github repository. If you want them please write an email to this address: clem.jacquet@gmail.com"
 	    ;;
     esac
 done
