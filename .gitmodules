@@ -6,11 +6,10 @@
 	url = https://github.com/clejacquet/vocabulometer-server
 [submodule "modules/nlp-en"]
 	path = modules/nlp-en
-	url = https://github.com/clejacquet/vocabulometer-nlp
+	url = https://github.com/clejacquet/vocabulometer-nlp-en
+[submodule "modules/nlp-jp"]
+	path = modules/nlp-jp
+	url = https://github.com/clejacquet/vocabulometer-nlp-jp
 [submodule "modules/fixation-provider"]
 	path = modules/fixation-provider
 	url = https://github.com/clejacquet/vocabulometer-gaze
-
-[submodule "modules/nlp-jp"]
-	path = modules/nlp-jp
-	url = https://github.com/clejacquet/vocabulometer-nlp-en.git

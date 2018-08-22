@@ -5,6 +5,7 @@ const _ = require('underscore');
 const mongoose = require('mongoose');
 
 const connectionString = 'mongodb://ds151820.mlab.com:51820/vocabulometer-dev';
+
 const CHUNK_SIZE = 20;
 
 async.parallel([
@@ -21,6 +22,7 @@ async.parallel([
             if (err) {
                 return console.error(err);
             }
+
 
             const mangaList = JSON.parse(content);
             const texts = mangaList.map(manga => manga.text
