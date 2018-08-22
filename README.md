@@ -1,11 +1,12 @@
 # vocabulometer
 Eye-tracking augmented website aiming at helping people learning new languages. Project developed as the main topic of my 2nd year internship at the Prefectoral University of Osaka.
 
-(Each version between parenthesis is the version I use. If you try with the newest ones it will most probably work too)
-
 # Setup
 
 ## Dependencies
+
+(Each version between parenthesis is the version I use. If you try with the newest ones it will most probably work too)
+
 Dependencies with a (\*) prepended to their name have an installation guide written below. The installation of the other
 dependencies is not explained.
 
