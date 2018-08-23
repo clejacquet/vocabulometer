@@ -5,7 +5,9 @@
 	"cwd": "./servers/heroku/dev",
 	"specific": {
 	    "ngEnv": "dev",
-	    "appName": "vocabulometer-dev"
+	    "appName": "vocabulometer-dev",
+		"remote": "heroku",
+		"branch": "master"
 	}
     },
     {
@@ -14,7 +16,9 @@
 	"cwd": "./servers/heroku/stable",
 	"specific": {
 	    "ngEnv": "prod",
-	    "appName": "vocabulometer"
+	    "appName": "vocabulometer",
+		"remote": "heroku",
+		"branch": "master"
 	}
     },
     {

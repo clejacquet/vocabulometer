@@ -32,7 +32,7 @@ module.exports = (gulp) => {
 	    }
 	}),
 
-	'deploy': (server) => ({
+	'deploy-git': (server) => ({
 	    task: (done) => {
 		run(`${server.name}:add`, `${server.name}:commit`, `${server.name}:push`, done);
 	    }
