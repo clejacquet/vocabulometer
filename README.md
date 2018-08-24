@@ -67,4 +67,4 @@ You can then delete the created folder ```tmp```.
 
 ## Architecture
 
-<div style="{margin: auto}"><img src="./.readme/ClientServerCommunication.png"></div>
+<img align="center" src="./.readme/ClientServerCommunication.png" />
