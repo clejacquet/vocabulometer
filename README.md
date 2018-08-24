@@ -1,5 +1,39 @@
-# vocabulometer
-Eye-tracking augmented website aiming at helping people learning new languages. Project developed as the main topic of my 2nd year internship at the Prefectoral University of Osaka.
+# About Vocabulometer
+
+Vocabulometer is a website that helps you learn English or Japanese. 
+
+Unlike other language learning apps or websites, Vocabulometer offers you texts to read 
+according to your vocabulary knowledge, and also analyzes your reading activity to catch 
+words you read. The system grows in the same time as your vocabulary improves. 
+This way, Vocabulometer is always providing you with the texts that will help you progress.
+
+# Technology stack
+
+## Overview
+
+<p align="center">
+  <img src="./.readme/Modules.png"/>
+</p>
+
+## Focusing on Client / Server communications
+
+Vocabulometer architecture mainly consists into two modules:
+ * The Angular Client
+ * The NodeJS Server
+ 
+Think of the Angular Client as the whole Vocabulometer website, containing all the HTML,
+CSS and JS files. The Angular Client can run independently, without any NodeJS server, but
+will be severally limited, as it has no access to the database.
+
+The NodeJS Server is there for that purpose, to offer an API for tasks such as users login,
+retrieving a text from the database or recommendations, that the Client cannot perform alone.
+
+The basic process is that the Client runs in your browser, and sends API calls whenever a
+server's task is needed.
+
+<p align="center">
+  <img src="./.readme/ClientServerCommunication.png"/>
+</p>
 
 # Setup
 
@@ -65,32 +99,19 @@ if you are on Ubuntu or Debian.
     
 You can then delete the created folder ```tmp```.
 
-## Architecture
 
-### Focusing on Client / Server communications
-
-Vocabulometer architecture mainly consists into two modules:
- * The Angular Client
- * The NodeJS Server
- 
-Think of the Angular Client as the whole Vocabulometer website, containing all the HTML,
-CSS and JS files. The Angular Client can run independently, without any NodeJS server, but
-will be severally limited, as it has no access to the database.
-
-The NodeJS Server is there for that purpose, to offer an API for tasks such as users login,
-retrieving a text from the database or recommendations, that the Client cannot perform alone.
-
-The basic process is that the Client runs in your browser, and sends API calls whenever a
-server's task is needed.
-
-The figure below explains in more depth the communication between those two modules. 
-
-<p align="center">
-  <img src="./.readme/ClientServerCommunication.png"/>
-</p>
 
 ## Testing your changes
 
 <p align="center">
   <img src="./.readme/Run2WaysClientServer.png"/>
 </p>
+
+# Credits
+
+
+This project has been mainly developed by Clément Jacquet, during his M1 and M2 internships
+at the IMP laboratory, Osaka Prefecture University. The development and research surrounding
+Vocabulometer has been supervised by Olivier Augereau (Osaka Prefecture University) and 
+Nicholas Journet (LaBRI). Credits go to Anne-Gaëlle Schall and David Pignato for their work 
+on real-time reading detection and the implementation of a Spaced Repetition System respectively.
