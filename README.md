@@ -64,3 +64,7 @@ if you are on Ubuntu or Debian.
     sudo make install
     
 You can then delete the created folder ```tmp```.
+
+## Architecture
+
+![Alt text](./.readme/Run2WaysClientServer.png)

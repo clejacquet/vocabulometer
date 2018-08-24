@@ -1,6 +1,7 @@
 doc
 local
 db_saves
+.idea
 */**/.idea
 */**/*.iml
 */**/*~
