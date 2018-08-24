@@ -67,6 +67,24 @@ You can then delete the created folder ```tmp```.
 
 ## Architecture
 
+### Focusing on Client / Server communications
+
+Vocabulometer architecture mainly consists into two modules:
+ * The Angular Client
+ * The NodeJS Server
+ 
+Think of the Angular Client as the whole Vocabulometer website, containing all the HTML,
+CSS and JS files. The Angular Client can run independently, without any NodeJS server, but
+will be severally limited, as it has no access to the database.
+
+The NodeJS Server is there for that purpose, to offer an API for tasks such as users login,
+retrieving a text from the database or recommendations, that the Client cannot perform alone.
+
+The basic process is that the Client runs in your browser, and sends API calls whenever a
+server's task is needed.
+
+The figure below explains in more depth the communication between those two modules. 
+
 <p align="center">
   <img src="./.readme/ClientServerCommunication.png"/>
 </p>
