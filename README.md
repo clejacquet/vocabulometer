@@ -70,3 +70,9 @@ You can then delete the created folder ```tmp```.
 <p align="center">
   <img src="./.readme/ClientServerCommunication.png"/>
 </p>
+
+## Testing your changes
+
+<p align="center">
+  <img src="./.readme/Run2WaysClientServer.png"/>
+</p>
