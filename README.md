@@ -67,4 +67,4 @@ You can then delete the created folder ```tmp```.
 
 ## Architecture
 
-![Alt text](./.readme/Run2WaysClientServer.png)
+<div style="{margin: auto}"><img src="./.readme/ClientServerCommunication.png"></div>
