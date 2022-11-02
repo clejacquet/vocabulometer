@@ -50,7 +50,7 @@ Please set those environment variables according to your setup.
 ## Installation of the dependencies
 
 ### Install Heroku CLI
-Only run ```npm i``` if you have never run it in ```deploy``` directory.
+Only run ```npm i``` in the ```deploy``` directory.
 
     cd deploy/
     npm i                # Skip if you have already done it
